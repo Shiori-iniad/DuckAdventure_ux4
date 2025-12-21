@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -11,9 +12,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Obstacle
+  - Player
+  - Ground
   - 
   - 
   - 
@@ -40,4 +41,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Sky
+    uniqueID: 579113499
+    locked: 0
+  - name: Cloud
+    uniqueID: 1205843855
+    locked: 0
+  - name: Moutain
+    uniqueID: 3291092321
+    locked: 0
+  - name: Grass
+    uniqueID: 177909575
+    locked: 0
+  - name: Tree
+    uniqueID: 3960257527
+    locked: 0
+  - name: Obstacle
+    uniqueID: 31545071
+    locked: 0
+  - name: Ground
+    uniqueID: 2077131609
+    locked: 0
+  - name: Player
+    uniqueID: 1330938733
     locked: 0
