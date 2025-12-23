@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player")]
     public float runSpeed = 5f;   // 右方向への自動移動速度
-    public float jumpForce = 12f;   // ジャンプの力
+    public float firstJumpForce = 8f;   // 1回目のジャンプ
+    public float secondJumpForce = 12f; // 2回目のジャンプ
     public int maxJumpCount = 2;   // ジャンプの最大回数
     private int jumpCount = 0;   // 現在のジャンプ回数
 
@@ -22,6 +23,12 @@ public class PlayerController : MonoBehaviour
     public float invincibleTime = 1.0f;   // 無敵時間(秒)
     private bool isInvincible = false;   // 現在無敵かどうか
     public bool IsInvincible => isInvincible;   // プロパティとして外部から無敵状態を参照可能
+
+    [Header("Fade")]
+    [SerializeField] private SceneFader sceneFader;
+    private bool isDead = false;   // 死亡処理の重複防止
+    [SerializeField] private string gameOverSceneName;
+
 
     // プレイヤーのsprite表示えを菅絵里するSpriteRenderer
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -62,8 +69,9 @@ public class PlayerController : MonoBehaviour
         {
             // rb.velocity.y = 0fで現在の上方向速度をリセット
             rb.velocity = new Vector2(rb.velocity.x, 0f);
+            float power = (jumpCount == 0) ? firstJumpForce : secondJumpForce;
             // AddForceで瞬間的に上方向に力を加える
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * power, ForceMode2D.Impulse);
             // ジャンプ回数を増やす
             jumpCount++;
         }
@@ -140,10 +148,25 @@ public class PlayerController : MonoBehaviour
 
 
     // 死亡時の処理
-    private void Die()
+    public void Die()
     {
+        if (isDead) return;   // 二重呼び出し防止
+
         // ゲームオーバー処理
         Debug.Log("Player Dead");
+
+        // プレイヤー操作を止める
+        rb.velocity = Vector2.zero;
+        rb.simulated = false;   // 物理停止
+
+        if (sceneFader != null)
+        {
+            sceneFader.FadeToScene(gameOverSceneName);
+        }
+        else
+        {
+            Debug.LogError("SceneFader が設定されていません");
+        }
     }
 
 
