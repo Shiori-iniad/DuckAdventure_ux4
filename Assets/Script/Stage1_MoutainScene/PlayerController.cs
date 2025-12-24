@@ -25,9 +25,11 @@ public class PlayerController : MonoBehaviour
     public bool IsInvincible => isInvincible;   // プロパティとして外部から無敵状態を参照可能
 
     [Header("Fade")]
-    [SerializeField] private SceneFader sceneFader;
+    [SerializeField] private MonoBehaviour fader; // IFaderを実装したコンポーネントをInspectorで設定
+    private IFader fadeController;   // フェード処理を呼ぶためのインターフェース参照
+
     private bool isDead = false;   // 死亡処理の重複防止
-    [SerializeField] private string gameOverSceneName;
+    [SerializeField] private string gameOverSceneName;   // ゲームオーバー時に遷移するシーン名
 
 
     // プレイヤーのsprite表示えを菅絵里するSpriteRenderer
@@ -53,6 +55,9 @@ public class PlayerController : MonoBehaviour
 
         // HP変更イベントを呼び出す
         onHPChanged?.Invoke(currentHP);
+
+        // フェード用コンポーネントをIFaderとして取得
+        fadeController = fader as IFader;
     }
 
 
@@ -159,13 +164,16 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.simulated = false;   // 物理停止
 
-        if (sceneFader != null)
+        // フェード可能なら
+        if (fadeController != null)
         {
-            sceneFader.FadeToScene(gameOverSceneName);
+            // フェードしてゲームオーバーシーンへ
+            fadeController.FadeToScene(gameOverSceneName);
         }
         else
         {
-            Debug.LogError("SceneFader が設定されていません");
+            // コンソールにログを表示
+            Debug.LogError("Fader が設定されていません");
         }
     }
 

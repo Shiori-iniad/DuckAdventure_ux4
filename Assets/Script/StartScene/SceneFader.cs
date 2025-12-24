@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneFader : MonoBehaviour
+// フェード演出用クラス(=IFaderでフェード用インターフェースを実装)
+public class SceneFader : MonoBehaviour, IFader
 {
 
     [SerializeField] private Image fadeImage;   //フェード用の画像

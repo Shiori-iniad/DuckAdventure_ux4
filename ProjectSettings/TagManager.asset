@@ -63,6 +63,9 @@ TagManager:
   - name: Coin
     uniqueID: 3811513131
     locked: 0
+  - name: Goal
+    uniqueID: 1743631727
+    locked: 0
   - name: Ground
     uniqueID: 2077131609
     locked: 0
