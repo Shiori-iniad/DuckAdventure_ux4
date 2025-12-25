@@ -14,6 +14,9 @@ public class DuckController : MonoBehaviour
     [SerializeField] private MonoBehaviour fader;
     [SerializeField] private string nextSceneName;
 
+    [Header("SE")]
+    [SerializeField] private AudioSource startWalkSE;
+
     private Rigidbody2D rb;
     private Animator animator;
     private IFader fadeController;
@@ -48,6 +51,11 @@ public class DuckController : MonoBehaviour
 
         // ② 歩き始める
         canWalk = true;
+
+        if (startWalkSE != null)
+        {
+            startWalkSE.Play();
+        }
 
         // ③ 10秒歩く
         yield return new WaitForSeconds(walkDuration);
