@@ -75,6 +75,12 @@ public class PrologueDialogue : MonoBehaviour
             StopAllCoroutines();
             dialogueText.text = dialogues[currentIndex - 1];
             isTyping = false;
+            // ★ ここを追加
+            if (currentIndex >= dialogues.Length)
+            {
+                isFinished = true;
+            }
+            return;
         }
         // 全セリフ終了後
         if (isFinished)
@@ -118,6 +124,7 @@ public class PrologueDialogue : MonoBehaviour
             isFinished = true;
         }
     }
+
 
 
 

@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rb;   // 2D物理挙動用のRigidbody2Dコンポーネント
     Animator animator;   // アニメーション制御用のAnimatorコンポーネント
+    public bool canControl = true;   // 操作可能フラグ
 
 
 
@@ -64,6 +65,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!canControl)
+        {
+            // 動き完全停止
+            rb.velocity = Vector2.zero;
+            return;
+        }
+        
         // 常に右へ走る
         // ⇔毎フレーム呼ばれる
         // ⇔X方向の速度をrunSpeedに固定。Y方向は物理挙動に任せる
