@@ -8,6 +8,10 @@ public class Goal : MonoBehaviour
     [SerializeField] private string gameClearSceneName;   // クリア後に遷移するシーン名
     private bool isCleared = false;   // すでにクリア処理を行ったかどうかのフラグ
 
+    [Header("SE")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip goalSE;
+
 
 
     void Start()
@@ -16,6 +20,11 @@ public class Goal : MonoBehaviour
         // ⇔成功すればfadeControllerに代入
         // ⇔失敗するとnull
         fadeController = fader as IFader;
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
 
@@ -31,6 +40,11 @@ public class Goal : MonoBehaviour
         {
             // クリア済みフラグをON
             isCleared = true;
+
+            if (audioSource != null && goalSE != null)
+            {
+                audioSource.PlayOneShot(goalSE);
+            }
 
             // プレイヤーからPlayerControllerを取得
             PlayerController player = collision.GetComponent<PlayerController>();

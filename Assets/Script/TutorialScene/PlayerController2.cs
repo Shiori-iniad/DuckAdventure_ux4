@@ -31,6 +31,10 @@ public class PlayerController2 : MonoBehaviour
     [SerializeField] private MonoBehaviour fader; // IFaderを実装したコンポーネントをInspectorで設定
     private IFader fadeController;   // フェード処理を呼ぶためのインターフェース参照
 
+    [Header("SE")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip damageSE;
+
     private bool isDead = false;   // 死亡処理の重複防止
 
     // プレイヤーのsprite表示えを菅絵里するSpriteRenderer
@@ -60,6 +64,11 @@ public class PlayerController2 : MonoBehaviour
 
         // フェード用コンポーネントをIFaderとして取得
         fadeController = fader as IFader;
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
 
@@ -128,6 +137,11 @@ public class PlayerController2 : MonoBehaviour
     {
         // 無敵中ならダメージを受けない
         if (isInvincible) return;
+
+        if (audioSource != null && damageSE != null)
+        {
+            audioSource.PlayOneShot(damageSE);
+        }
 
         // HPを減らして0未満にならないようMathf.Maxにする
         currentHP = Mathf.Max(currentHP - damage, 0);
