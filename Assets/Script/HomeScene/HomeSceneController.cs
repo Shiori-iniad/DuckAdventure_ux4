@@ -38,6 +38,7 @@ public class HomeSceneController : MonoBehaviour
     // ③ Stage1_Prologue へ（★専用SE）
     public void GoToStage1PrologueScene()
     {
+        GameCoinManager.Instance.ResetStagePoint();
         PlaySEAndFade("Stage1_Prologue", stage1ClickSE);
     }
 
