@@ -584,7 +584,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fader: {fileID: 76871239}
   seAudioSource: {fileID: 1593331934}
-  clickSE: {fileID: 8300000, guid: 77df0955bd7469c4db3c091839c54483, type: 3}
+  defaultClickSE: {fileID: 8300000, guid: 77df0955bd7469c4db3c091839c54483, type: 3}
+  stage1ClickSE: {fileID: 8300000, guid: 18fec895806d7974db8465d76e2979ca, type: 3}
 --- !u!4 &994155117
 Transform:
   m_ObjectHideFlags: 0
@@ -1668,7 +1669,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 88ba50762a8d4b2448357172943822d8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

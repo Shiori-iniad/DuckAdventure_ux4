@@ -8,10 +8,11 @@ public class HomeSceneController : MonoBehaviour
     private IFader fadeController;
 
     [Header("SE")]
-    [SerializeField] private AudioSource seAudioSource; // SE再生用
-    [SerializeField] private AudioClip clickSE;         // 共通SE
+    [SerializeField] private AudioSource seAudioSource;
+    [SerializeField] private AudioClip defaultClickSE;   // 共通SE
+    [SerializeField] private AudioClip stage1ClickSE;    // ★ Stage1用SE
 
-    private bool isPressed = false; // 連打防止
+    private bool isPressed = false;
 
     void Awake()
     {
@@ -22,43 +23,40 @@ public class HomeSceneController : MonoBehaviour
         }
     }
 
-    // ① StartScene へ
+    // ① StartScene へ（共通SE）
     public void GoToStartScene()
     {
-        PlaySEAndFade("StartScene");
+        PlaySEAndFade("StartScene", defaultClickSE);
     }
 
-    // ② TutorialScene へ
+    // ② TutorialScene へ（共通SE）
     public void GoToPrologueScene()
     {
-        PlaySEAndFade("TutorialScene");
+        PlaySEAndFade("TutorialScene", defaultClickSE);
     }
 
-    // ③ Stage1_Prologue へ
+    // ③ Stage1_Prologue へ（★専用SE）
     public void GoToStage1PrologueScene()
     {
-        PlaySEAndFade("Stage1_Prologue");
+        PlaySEAndFade("Stage1_Prologue", stage1ClickSE);
     }
 
-    // ★ 共通処理
-    void PlaySEAndFade(string sceneName)
+    void PlaySEAndFade(string sceneName, AudioClip se)
     {
         if (isPressed) return;
         isPressed = true;
 
-        StartCoroutine(PlaySEThenFade(sceneName));
+        StartCoroutine(PlaySEThenFade(sceneName, se));
     }
 
-    IEnumerator PlaySEThenFade(string sceneName)
+    IEnumerator PlaySEThenFade(string sceneName, AudioClip se)
     {
-        // ① SE再生
-        if (seAudioSource != null && clickSE != null)
+        if (seAudioSource != null && se != null)
         {
-            seAudioSource.PlayOneShot(clickSE);
-            yield return new WaitForSeconds(clickSE.length);
+            seAudioSource.PlayOneShot(se);
+            yield return new WaitForSeconds(se.length);
         }
 
-        // ② フェードしてシーン遷移
         if (fadeController != null)
         {
             fadeController.FadeToScene(sceneName);
